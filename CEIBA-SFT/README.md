@@ -2,7 +2,7 @@
 
 Proyecto integrador de Análisis y Diseño de Software.
 **Integrantes:** Joicer Prieto · Anthony Larios
-**Aplicación publicada:** _(pegar aquí la URL de GitHub Pages del repositorio)_
+**Aplicación publicada:** _(https://tusk-jun.github.io/CEIBA/CEIBA-SFT)_
 
 ## Qué hace
 - **Paciente:** registro e inicio de sesión, perfil, búsqueda de franjas por especialidad, profesional y fecha, reserva, "Mis citas" y cancelación (mínimo 12 horas antes).
