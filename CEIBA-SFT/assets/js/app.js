@@ -108,9 +108,14 @@ async function vReservar() {
       const mi = ++ultima; const filas = await Citas.disponibilidad(esp.value, prof.value, fecha.value); if (mi !== ultima) return; limpiar(lista);
       if (!filas.length) return lista.append(vacio('No hay franjas libres con esos filtros. Prueba otra fecha o especialidad.'));
       const dias = Map.groupBy(filas, (f) => f.fecha);
-      for (const [d, fs] of dias) lista.append(h('section', { class: 'day' }, h('h3', { text: fFecha(d) }),
-        h('div', { class: 'slots' }, fs.map((f) => h('button', { class: 'slot', onclick: () => reservar(f, buscar) },
-          h('b', { text: fHora(f.hora_inicio) }), h('small', { text: f.profesional + ' · ' + f.especialidad }))))));
+      const boton = (f) => h('button', { class: 'slot', onclick: () => reservar(f, buscar) },
+        h('b', { text: fHora(f.hora_inicio) }), h('small', { text: f.profesional + ' · ' + f.especialidad }));
+      for (const [d, fs] of dias) {
+        const sec = h('section', { class: 'day' }, h('h3', { text: fFecha(d) }));
+        for (const [nom, grupo] of [['Mañana', fs.filter((f) => f.hora_inicio < '12:00')], ['Tarde', fs.filter((f) => f.hora_inicio >= '12:00')]])
+          if (grupo.length) sec.append(h('p', { class: 'franja', text: nom }), h('div', { class: 'slots' }, grupo.map(boton)));
+        lista.append(sec);
+      }
     } catch (e) { limpiar(lista); lista.append(vacio(msgError(e))); }
   };
   esp.onchange = () => { llenarProf(); buscar(); }; prof.onchange = buscar; fecha.onchange = buscar;
@@ -263,7 +268,6 @@ async function vCitasAdmin() {
   cargar();
 }
 
-/* ---------- Helpers de presentación ---------- */
 const tag = (estado) => h('span', { class: 'tag ' + estado, text: estado.replace('_', ' ') });
 function tabla(cols, filas) {
   return h('div', { class: 'table-wrap panel' }, h('table', {}, h('thead', {}, h('tr', {}, cols.map((c) => h('th', { scope: 'col', text: c })))),
