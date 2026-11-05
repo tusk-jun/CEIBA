@@ -38,7 +38,7 @@ export function msgError(e) {
   console.error(e); return 'No se pudo completar la acción. Intenta de nuevo.';
 }
 export const fFecha = (f) => new Date(f + 'T12:00:00').toLocaleDateString('es-CO', { weekday: 'long', day: 'numeric', month: 'long' });
-export const fHora = (t) => t.slice(0, 5);
+export const fHora = (t) => { const hh = Number(t.slice(0, 2)); return `${hh % 12 || 12}:${t.slice(3, 5)} ${hh < 12 ? 'a. m.' : 'p. m.'}`; };
 export function confirmar(titulo, texto, extra) {
   const d = document.getElementById('dlg'); limpiar(d);
   return new Promise((res) => {
