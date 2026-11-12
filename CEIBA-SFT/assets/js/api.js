@@ -10,6 +10,7 @@ export const Auth = {
   entrar: (email, password) => ok(sb.auth.signInWithPassword({ email, password })),
   registrar: (email, password, nombres, version) => ok(sb.auth.signUp({ email, password, options: { data: { nombres, acepta_datos: 'true', version_politica: version } } })),
   recuperar: (email) => ok(sb.auth.resetPasswordForEmail(email, { redirectTo: location.origin + location.pathname })),
+  google: () => ok(sb.auth.signInWithOAuth({ provider: 'google', options: { redirectTo: location.origin + location.pathname } })),
   salir: () => sb.auth.signOut({ scope: 'local' }),
   sesion: async () => (await sb.auth.getSession()).data.session,
   onCambio: (fn) => sb.auth.onAuthStateChange((ev) => fn(ev)),
