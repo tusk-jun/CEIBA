@@ -84,6 +84,7 @@ function vAcceso(modo = 'entrar') {
     esRec ? '' : h('button', { type: 'button', class: 'link', text: 'Mostrar u ocultar contraseña', onclick: () => { pass.type = pass.type === 'password' ? 'text' : 'password'; } }),
     esReg ? h('label', { class: 'chk', for: 'f-ok' }, ok, h('span', {}, 'Autorizo el tratamiento de mis datos personales según la ', h('a', { href: '#privacidad', text: 'política de tratamiento de datos' }), '.')) : '',
     err, btn,
+    esRec ? '' : h('button', { type: 'button', class: 'btn ghost', text: 'Continuar con Google', onclick: (ev) => conBoton(ev.target, () => Auth.google()) }),
     h('p', {}, h('button', { type: 'button', class: 'link', text: esReg ? 'Ya tengo cuenta' : 'Crear cuenta', onclick: () => vAcceso(esReg ? 'entrar' : 'registro') }), ' · ',
       h('button', { type: 'button', class: 'link', text: esRec ? 'Volver' : 'Olvidé mi contraseña', onclick: () => vAcceso(esRec ? 'entrar' : 'recuperar') })));
   main.append(h('h1', { text: 'Reserva tu cita médica en minutos' }), h('p', { text: 'Agenda, consulta y cancela tus citas desde cualquier dispositivo.' }),
